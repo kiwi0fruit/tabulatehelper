@@ -60,6 +60,8 @@ Example:
    # tabulate helper with overriding align format:
    tbl = th.md_table(df, formats={'-1': ':-:'})
 
+   prrint(tbl)
+
 Output:
 
 ::
