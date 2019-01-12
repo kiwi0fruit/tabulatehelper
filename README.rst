@@ -2,7 +2,9 @@ Tabulate Helper
 ===============
 
 Converts tabular data like Pandas dataframe to GitHub Flavored Markdown
-pipe table (wrapper around tabulate module).
+pipe table (wrapper around
+`tabulate <https://pypi.org/project/tabulate/>`__ module). I use it with
+`Pandoctools/Knitty <https://github.com/kiwi0fruit/pandoctools>`__.
 
 Contents
 ========
