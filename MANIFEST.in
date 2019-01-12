@@ -1,0 +1,2 @@
+include tabulatehelper/*
+include versioneer.py

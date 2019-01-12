@@ -1,0 +1,105 @@
+Tabulate Helper
+===============
+
+Converts tabular data like Pandas dataframe to GitHub Flavored Markdown
+pipe table (wrapper around tabulate module).
+
+Contents
+========
+
+-  `Tabulate Helper <#tabulate-helper>`__
+-  `Contents <#contents>`__
+-  `Install <#install>`__
+-  `Usage example <#usage-example>`__
+
+Install
+=======
+
+Via conda:
+
+::
+
+   conda install -c defaults -c conda-forge pandas "tabulate>=0.8.2" "pip>=10.0.1"
+   pip install tabulatehelper
+
+Via pip:
+
+::
+
+   pip install tabulatehelper
+
+Usage example
+-------------
+
+Main functions are ``tabulatehelper.md_table(...)`` and
+``tabulatehelper.md_header(...)``. Usage example that works both in
+Atom+Hydrogen and in Pandoctools+Knitty:
+
+.. code:: py
+
+   from IPython.display import Markdown
+   import pandas as pd
+   import numpy as np
+   import tabulatehelper as th
+
+   df = pd.DataFrame(np.random.random(16).reshape(4, 4))
+
+   # appended header is useful when very long table
+   # (can display `df.iloc[[0]]` in hydrogen)
+   Markdown(f"""
+
+   {th.md_table(df)}
+
+   : Table {{#tbl:table1}}
+
+   {th.md_header(df)}
+
+   """)
+
+From
+`tabulate_helper.py <https://github.com/kiwi0fruit/tabulatehelper/tree/master/tabulatehelper/tabulate_helper.py>`__:
+
+.. code:: py
+
+   def md_table(tabular_data: Union[pd.DataFrame, object],
+                headers: tuple = None,
+                showindex: Union[bool, None] = False,
+                formats: Union[dict, str, Iterable[str]] = None,
+                **kwargs) -> str:
+       """
+       Converts tabular data like Pandas dataframe to
+       GitHub Flavored Markdown pipe table.
+
+       Markdown table ``formats`` examples:
+
+       * ``{'0': '-:', '-1': ':-:'}`` - only int keys
+       * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
+         any keys that incl. column names (has priority if
+         all keys are from column names that are integers)
+       * ``'--|-:|--'`` or ``'|--|-:|--|'``
+       * ``['--', '-:', '--']`` - iterable
+
+       Parameters
+       ----------
+       tabular_data :
+           tabulate.tabulate(tabular_data[,...]) argument
+       headers :
+           tabulate.tabulate(..., headers[,...]) optional argument.
+           If None and tabular_data is pd.DataFrame then default is
+           tabular_data.columns converted to Tuple[str, ...].
+           If None then use tabulate.tabulate(...) default
+           (but in this particular case if it's absent in the output
+           then add blank header).
+       showindex :
+           tabulate.tabulate(..., showindex[,...]) optional argument.
+       formats :
+           GitHub Flavored Markdown table align formats
+       kwargs :
+           Other tabulate.tabulate(...) optional keyword arguments
+
+       Returns
+       -------
+       md :
+           Markdown table
+       """
+       ...
