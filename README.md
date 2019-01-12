@@ -8,6 +8,7 @@ Converts tabular data like Pandas dataframe to GitHub Flavored Markdown pipe tab
 * [Tabulate Helper](#tabulate-helper)
 * [Contents](#contents)
 * [Install](#install)
+* [Differences from tabulate module](#differences-from-tabulate-module)
 * [Usage example](#usage-example)
 
 
@@ -24,6 +25,41 @@ Via pip:
 
 ```
 pip install tabulatehelper
+```
+
+
+# Differences from tabulate module
+
+* With defaults: auto-headers for Pandas data frames,
+* With defaults: auto-empty headers for GitHub compatibility,
+* Special function that prints header only (useful at the end of long tables),
+* Doesn't show index by default,
+* `formats` argument can be set that selectively overrides automatic align format.
+
+Example:
+```py
+import numpy as np
+import pandas as pd
+from tabulate import tabulate
+import tabulatehelper as th
+
+df = pd.DataFrame(np.random.random(16).reshape(4, 4), columns=('a', 'b', 'c', 'd'))
+
+# tabulate wtithout wrapper:
+tbl = tabulate(df, df.columns, tablefmt='pipe', showindex=False)
+
+# tabulate helper with overriding align format:
+tbl = th.md_table(df, formats={'-1': ':-:'})
+```
+
+Output:
+```
+|        a |        b |        c |        d |
+|---------:|---------:|---------:|:--------:|
+| 0.413284 | 0.932373 | 0.277797 | 0.646333 |
+| 0.552731 | 0.381826 | 0.141727 | 0.2483   |
+| 0.779889 | 0.012458 | 0.308352 | 0.650859 |
+| 0.301109 | 0.982111 | 0.994024 | 0.43551  |
 ```
 
 
