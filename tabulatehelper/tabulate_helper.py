@@ -126,7 +126,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         pass
     else:
         if isinstance(formats, str):
-            if re.match(r'^[lrcLRC]+$', formats):
+            if re.match(r'^[lrcLRC-]+$', formats):
                 fmts = list(formats)
             else:
                 fmts = formats.split('|')
@@ -159,7 +159,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         if not md_headers:
             return ''
         else:
-            return line_sep.join((md_headers, _formats, re.sub(r'[^ |]', ' ', _formats)))
+            return line_sep.join((md_headers, _formats, re.sub(r'[^|]', ' ', _formats)))
     else:
         return line_sep.join(filter(None, (md_headers, _formats, table_body)))
 

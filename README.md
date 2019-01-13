@@ -10,6 +10,8 @@ Converts tabular data like Pandas dataframe to GitHub Flavored Markdown pipe tab
 * [Install](#install)
 * [Differences from tabulate module](#differences-from-tabulate-module)
 * [Usage example](#usage-example)
+* [Converting to other formats](#converting-to-other-formats)
+* [API](#api)
 
 
 # Install
@@ -49,7 +51,7 @@ df = pd.DataFrame(np.random.random(16).reshape(4, 4), columns=('a', 'b', 'c', 'd
 tbl = tabulate(df, df.columns, tablefmt='pipe', showindex=False)
 
 # tabulate helper with overriding align format:
-tbl = th.md_table(df, formats={'-1': ':-:'})
+tbl = th.md_table(df, formats={-1: 'c'})
 
 print(tbl)
 ```
@@ -90,6 +92,14 @@ Markdown(f"""
 """)
 ```
 
+
+# Converting to other formats
+
+Tabulate can convert to other formats but I prefer using [pypandoc](https://pypi.org/project/pypandoc/) on `th.md_table` output as it can convert to any Pandoc supported [output format](https://pandoc.org/MANUAL.html#general-options).
+
+
+# API
+
 From [tabulate_helper.py](https://github.com/kiwi0fruit/tabulatehelper/tree/master/tabulatehelper/tabulate_helper.py):
 
 ```py
@@ -97,6 +107,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
              headers: tuple = None,
              showindex: Union[bool, None] = False,
              formats: Union[dict, str, Iterable[str]] = None,
+             return_headers_only: bool = False,
              **kwargs) -> str:
     """
     Converts tabular data like Pandas dataframe to
@@ -104,12 +115,9 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
 
     Markdown table ``formats`` examples:
 
-    * ``{'0': '-:', '-1': ':-:'}`` - only int keys
-    * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
-      any keys that incl. column names (has priority if
-      all keys are from column names that are integers)
-    * ``'--|-:|--'`` or ``'|--|-:|--|'``
-    * ``['--', '-:', '--']`` - iterable
+    * ``dict(foo='-:', bar=':-:', **{-1: 'c'})``,
+    * ``'--|-:|:-:'`` or ``'|--|-:|:-:|'`` or ``-rc``,
+    * ``['--', '-:', 'C']``
 
     Parameters
     ----------
@@ -125,7 +133,14 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
     showindex :
         tabulate.tabulate(..., showindex[,...]) optional argument.
     formats :
-        GitHub Flavored Markdown table align formats
+        GitHub Flavored Markdown table align formats: dict, str or list / iterable.
+        '-' mean lack of align format, 'l'/'L'/':-' mean left align,
+        'r'/'R'/'-:' mean right align, 'c'/'C'/':-:' mean center align.
+        dict keys are for tabulate output headers so they should be str.
+        int keys mean column number.
+    return_headers_only :
+        returns only table header + empty row.
+        If header is absent then returns empty string.
     kwargs :
         Other tabulate.tabulate(...) optional keyword arguments
 
