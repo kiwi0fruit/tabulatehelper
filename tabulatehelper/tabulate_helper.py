@@ -126,7 +126,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         pass
     else:
         if isinstance(formats, str):
-            if re.match(r'^[lrcLRC-]+$', formats):
+            if re.match(r'^[lrcLRC\-]+$', formats):
                 fmts = list(formats)
             else:
                 fmts = formats.split('|')
