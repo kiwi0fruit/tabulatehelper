@@ -19,8 +19,7 @@ Converts tabular data like Pandas dataframe to GitHub Flavored Markdown pipe tab
 Via conda:
 
 ```
-conda install -c defaults -c conda-forge pandas "tabulate>=0.8.2" "pip>=10.0.1"
-pip install tabulatehelper
+conda install -c defaults -c conda-forge tabulatehelper
 ```
 
 Via pip:
