@@ -94,7 +94,9 @@ Markdown(f"""
 
 # Converting to other formats
 
-Tabulate can convert to other formats but I prefer using [panflute convert_text](http://scorreia.com/software/panflute/code.html#panflute.tools.convert_text) on `th.md_table` output as it can convert to any Pandoc supported [output format](https://pandoc.org/MANUAL.html#general-options).
+Tabulate can convert to other formats but I prefer using [panflute convert_text](http://scorreia.com/software/panflute/code.html#panflute.tools.convert_text) on `th.md_table` output as it can convert to any Pandoc supported [output format](https://pandoc.org/MANUAL.html#general-options)
+
+    conda install -c defaults -c conda-forge py-pandoc panflute
 
 
 # API
